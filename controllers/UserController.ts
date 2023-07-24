@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { User } from "../entities/User";
-import { getManager } from "typeorm";
+import { getManager, getRepository } from "typeorm";
 
 const homeDetail = async (req: Request, res: Response) => {
   const entityManager = getManager();
@@ -41,4 +41,41 @@ const homeDetail = async (req: Request, res: Response) => {
   });
 };
 
-export { homeDetail };
+const homeDetailByRepository = async (req: Request, res: Response) => {
+  const userRepository = getRepository(User);
+
+  //Insert user
+  /*let data = await userRepository.insert({
+    name: "demo",
+    email: "demo1@example.com",
+  });
+  */
+
+  //Save user
+  /*const user = new User();
+    user.email = "demo3@example.com";
+    user.name = "demo";
+    const data = await userRepository.save(user);
+*/
+
+  //Update user
+  /*let data = await userRepository.update(1, { email: "test@example.com" });*/
+
+  //delete user
+  /*let data = await userRepository.delete(2);*/
+
+  //get all user
+  /*let data = await userRepository.find();*/
+
+  //get one user by id
+  /*let data = await userRepository.findOne({ where: { id: 1 } });*/
+
+  // truncate user tabe
+  let data = await userRepository.clear();
+
+  res.status(200).json({
+    data,
+  });
+};
+
+export { homeDetail, homeDetailByRepository };
