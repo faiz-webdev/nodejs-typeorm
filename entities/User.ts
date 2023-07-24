@@ -13,12 +13,12 @@ export class User extends BaseEntity {
   @Column({ unique: true, length: 100 })
   email: string;
 
-  @Column({ length: 100 })
+  @Column({ length: 100, nullable: true })
   password: string;
 
-  @Column("double")
+  @Column({ nullable: true })
   views: number;
 
-  @Column()
+  @Column({ default: false })
   isPublished: boolean;
 }

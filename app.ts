@@ -19,7 +19,7 @@ createConnection({
   synchronize: true,
     entities: ['./entities/*.ts'],
 //   entities: ["./schema/*.ts"],
-  logging: true,
+//   logging: true,
 })
   .then(() => {
     console.log("DB Connection established");
