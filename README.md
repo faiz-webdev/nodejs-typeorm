@@ -11,3 +11,7 @@
 
 ## Run migrations
   npm run db:sync
+
+## Entity Inheritance
+  1. Concrete table inheritance
+  2. Single table inheritance
