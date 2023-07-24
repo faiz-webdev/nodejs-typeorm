@@ -1,10 +1,13 @@
 import express, { Request, Response } from "express";
 import { createConnection } from "typeorm";
 import { User } from "./entities/User";
+import { router } from "./routes/routes";
 
 const app = express();
 
 const port = 4011;
+
+app.use('/', router)
 
 createConnection({
   type: "mysql",
@@ -14,8 +17,8 @@ createConnection({
   password: "root",
   database: "node-typeorm",
   synchronize: true,
-  //   entities: ['./entities/*.ts'],
-  entities: ["./schema/*.ts"],
+    entities: ['./entities/*.ts'],
+//   entities: ["./schema/*.ts"],
   logging: true,
 })
   .then(() => {
