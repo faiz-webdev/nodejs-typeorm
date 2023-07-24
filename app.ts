@@ -1,11 +1,22 @@
 import express, { Request, Response } from "express";
 import { createConnection } from "typeorm";
+import { User } from "./entities/User";
 
 const app = express();
 
 const port = 4011;
 
-createConnection()
+createConnection({
+  type: "mysql",
+  host: "localhost",
+  port: 3306,
+  username: "root",
+  password: "root",
+  database: "node-typeorm",
+  synchronize: true,
+  entities: ['./entities/*.ts'],
+  logging: true
+})
   .then(() => {
     console.log("DB Connection established");
   })
