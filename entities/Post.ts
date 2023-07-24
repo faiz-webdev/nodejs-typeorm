@@ -1,7 +1,7 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, ChildEntity } from "typeorm";
 import { Content } from "./Content";
 
-@Entity("posts")
+@ChildEntity("posts")
 export class Post extends Content {
    @Column()
   viewcount: string;

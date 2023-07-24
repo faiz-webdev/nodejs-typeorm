@@ -1,7 +1,7 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, ChildEntity } from "typeorm";
 import { Content } from "./Content";
 
-@Entity("photos")
+@ChildEntity("photos")
 export class Photo extends Content {
   @Column()
   size: string;

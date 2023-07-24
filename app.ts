@@ -14,8 +14,9 @@ createConnection({
   password: "root",
   database: "node-typeorm",
   synchronize: true,
-  entities: ['./entities/*.ts'],
-  logging: true
+  //   entities: ['./entities/*.ts'],
+  entities: ["./schema/*.ts"],
+  logging: true,
 })
   .then(() => {
     console.log("DB Connection established");
