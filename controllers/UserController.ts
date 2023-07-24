@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { User } from "../entities/User";
-import { getManager, getRepository } from "typeorm";
+import { Between, Equal, In, LessThan, Like, MoreThan, Not, getManager, getRepository } from "typeorm";
 
 const homeDetail = async (req: Request, res: Response) => {
   const entityManager = getManager();
@@ -53,9 +53,9 @@ const homeDetailByRepository = async (req: Request, res: Response) => {
 
   //Save user
   /*const user = new User();
-    user.email = "demo3@example.com";
-    user.name = "demo";
-    const data = await userRepository.save(user);
+  user.email = "demo5@example.com";
+  user.name = "demo";
+  const data = await userRepository.save(user);
 */
 
   //Update user
@@ -71,7 +71,42 @@ const homeDetailByRepository = async (req: Request, res: Response) => {
   /*let data = await userRepository.findOne({ where: { id: 1 } });*/
 
   // truncate user tabe
-  let data = await userRepository.clear();
+  /*let data = await userRepository.clear();*/
+
+  //selection column
+  // const data = await userRepository.find({select:['id', 'name']})
+
+  //where
+  /*const data = await userRepository.find({
+    where: { name: "ram", email: "ram@mail.com" },
+    select: ["id", "name"],
+  });
+  */
+
+  //or condition
+  /*const data = await userRepository.find({
+    where: [{ name: "ram" }, { email: "demo1@example.com" }],
+    select: ["id", "name"],
+  });*/
+
+  //order by
+  /*const data = await userRepository.find({order:{name:'DESC'}})*/
+
+  //order, skip , offset, take
+  //   const data = await userRepository.find({ order: { id: "DESC" }, skip: 1, take:2 });
+
+  //NOT, lesstahn condition
+  const data = await userRepository.find(
+    { 
+        where: { 
+            // email: Not("demo3@example.com")
+            // email: LessThan("demo3@example.com") 
+            // id: MoreThan(1)
+            // id: Equal(1)  
+            // name: Like("%d%")
+            // id: Between(2,4)
+            // name: In(['ram', 'demo']) 
+        } });
 
   res.status(200).json({
     data,
