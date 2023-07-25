@@ -31,7 +31,7 @@ export class UserEntity extends BaseEntity {
   updated_at: Date;
 
   @OneToOne(() => ProfileEntity)
-    @JoinColumn({ name: "profile_id" })
-//   @JoinColumn()
+  @JoinColumn({ name: "profile_id" })
+  //   @JoinColumn()
   profile: ProfileEntity;
 }

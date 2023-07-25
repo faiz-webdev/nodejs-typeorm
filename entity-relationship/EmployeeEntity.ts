@@ -1,4 +1,10 @@
-import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { PhotoEntity } from "./PhotoEntity";
 
 @Entity("employees")
@@ -11,6 +17,6 @@ export class EmployeeEntity extends BaseEntity {
   })
   name: string;
 
-@OneToMany(()=> PhotoEntity,photo=> photo.employee)
+  @OneToMany(() => PhotoEntity, (photo) => photo.employee)
   photos: PhotoEntity[];
 }

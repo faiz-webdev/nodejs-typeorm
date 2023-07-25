@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { User } from "../entities/User";
-import { getManager } from "typeorm";
+import { getManager, getRepository } from "typeorm";
 import { UserRepo, UserWithoutRepository } from "../repository/UserRepository";
 import { UserEntity } from "../entity-relationship/UserEntity";
 import { ProfileEntity } from "../entity-relationship/ProfileEntity";
@@ -91,4 +91,73 @@ const homeDetail = async (req: Request, res: Response) => {
   });
 };
 
-export { homeDetail };
+const getHomeDetail = async (req: Request, res: Response) => {
+  const entityManager = getManager();
+
+  //##### one to one relationship #####
+  // const repos = getRepository(UserEntity);
+  // const data = await repos.find({ relations: ["profile"] });
+
+  // const repos = getRepository(ProfileEntity);
+  // const data = await repos.find({ relations: ["user"] });
+
+  /* const data = await entityManager
+  //   .getRepository(ProfileEntity)
+  //   .createQueryBuilder("profile")
+  //   .leftJoinAndSelect("profile.user", "user")
+     .getMany();
+  */
+
+  /*const data = await entityManager
+    .getRepository(UserEntity)
+    .createQueryBuilder("user")
+    .leftJoinAndSelect("user.profile", "profile")
+    .getMany();
+    */
+
+  //######one to many######
+  /* const repos = getRepository(EmployeeEntity);
+    const data = await repos.find({relations: ['photos']})
+    */
+
+  /*const repos = getRepository(PhotoEntity);
+    const data = await repos.find({relations: ['employee']})
+    */
+
+  /*const data = await entityManager
+    .getRepository(EmployeeEntity)
+    .createQueryBuilder("employee")
+    .leftJoinAndSelect("employee.photos", "photos")
+    .getMany();*/
+
+  /*const data = await entityManager
+    .getRepository(PhotoEntity)
+    .createQueryBuilder("photo")
+    .leftJoinAndSelect("photo.employee", "employee")
+    .getMany();
+    */
+
+  //######many to many######
+  /*const repos = getRepository(QuestionEntity);
+  const data = await repos.find({ relations: ["categories"] });
+  */
+
+  //######many to many######
+  const data = await entityManager
+    .getRepository(QuestionEntity)
+    .createQueryBuilder("question")
+    .leftJoinAndSelect("question.categories", "categories")
+    .getMany();
+
+  /*const data = await entityManager
+    .getRepository(CategoryEntity)
+    .createQueryBuilder("categories")
+    .leftJoinAndSelect("categories.question", "questions")
+    .getMany();*/
+
+  res.status(200).json({
+    data,
+  });
+};
+
+export { homeDetail, getHomeDetail };
