@@ -21,7 +21,7 @@ export class UserEntity extends BaseEntity {
   })
   name: string;
 
-  @Column({ unique: true, length: 100 })
+  @Column({ unique: false, length: 100, nullable: true })
   email: string;
 
   @CreateDateColumn()
