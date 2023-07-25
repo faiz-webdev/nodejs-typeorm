@@ -12,7 +12,7 @@ import {
   getRepository,
   getCustomRepository,
 } from "typeorm";
-import { UserRepo } from "../repository/UserRepository";
+import { UserRepo, UserWithoutRepository } from "../repository/UserRepository";
 
 const homeDetail = async (req: Request, res: Response) => {
   const entityManager = getManager();
@@ -131,7 +131,7 @@ const homeDetailByCustomRepo = async (
   next: NextFunction
 ) => {
   try {
-    const userRepository = getCustomRepository(UserRepo);
+    /*const userRepository = getCustomRepository(UserRepo);
 
     // const data = await userRepository.customSave("mydata", "test3@mail.com");
 
@@ -139,6 +139,13 @@ const homeDetailByCustomRepo = async (
       "mydata",
       "test3@mail.com"
     );
+    */
+
+    const userRepository = getCustomRepository(UserWithoutRepository);
+    // const data = await userRepository.customSave("mydata", "test4@mail.com");
+
+    const data = await userRepository.findByNameAndEmail("mydata", "test1@mail.com");
+
     res.status(200).json({
       data,
     });
