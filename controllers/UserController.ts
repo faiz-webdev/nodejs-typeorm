@@ -6,6 +6,8 @@ import { UserEntity } from "../entity-relationship/UserEntity";
 import { ProfileEntity } from "../entity-relationship/ProfileEntity";
 import { EmployeeEntity } from "../entity-relationship/EmployeeEntity";
 import { PhotoEntity } from "../entity-relationship/PhotoEntity";
+import { CategoryEntity } from "../entity-relationship/CategoryEntity";
+import { QuestionEntity } from "../entity-relationship/QuestionEntity";
 
 const homeDetail = async (req: Request, res: Response) => {
   const entityManager = getManager();
@@ -46,6 +48,7 @@ const homeDetail = async (req: Request, res: Response) => {
   p3.employee = employee;
   await entityManager.save(p3);*/
 
+  /*##########One to Many relationship##########
   const p1 = new PhotoEntity();
   p1.url = "demo.png";
   await entityManager.save(p1);
@@ -62,24 +65,26 @@ const homeDetail = async (req: Request, res: Response) => {
   employee.name = "john Smith";
   employee.photos = [p1, p2, p3];
   await entityManager.save(employee);
+  */
 
-  //Update user
-  /*let data = await entityManager.update(User, 1, {email:'test@example.com'});
-   */
+  //many to many relationship
+  const c1 = new CategoryEntity();
+  c1.name = "A";
+  await entityManager.save(c1);
 
-  //delete user
-  /*let data = await entityManager.delete(User, 3);
-   */
+  const c2 = new CategoryEntity();
+  c2.name = "B";
+  await entityManager.save(c2);
 
-  //get all user
-  /*let data = await entityManager.find(User);
-   */
+  const c3 = new CategoryEntity();
+  c3.name = "C";
+  await entityManager.save(c3);
 
-  //get one user by id
-  /*let data = await entityManager.findOne(User, { where: { id: 1 } });*/
-
-  // truncate user tabe
-  // let data = await entityManager.clear(User);
+  const q1 = new QuestionEntity();
+  q1.title = "Last test";
+  q1.text = "My last test";
+  q1.categories = [c1, c2, c3];
+  await entityManager.save(q1);
 
   res.status(200).json({
     data: "success",
