@@ -17,7 +17,7 @@ createConnection({
   password: "root",
   database: "node-typeorm",
   synchronize: true,
-  entities: ["./entities/*.ts"],
+  entities: ["./entity-relationship/*.ts"],
   //   entities: ["./schema/*.ts"],
   //   logging: true,
 })
