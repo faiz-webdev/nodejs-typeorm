@@ -1,6 +1,18 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { User } from "../entities/User";
-import { Between, Equal, In, LessThan, Like, MoreThan, Not, getManager, getRepository } from "typeorm";
+import {
+  Between,
+  Equal,
+  In,
+  LessThan,
+  Like,
+  MoreThan,
+  Not,
+  getManager,
+  getRepository,
+  getCustomRepository,
+} from "typeorm";
+import { UserRepo } from "../repository/UserRepository";
 
 const homeDetail = async (req: Request, res: Response) => {
   const entityManager = getManager();
@@ -96,21 +108,44 @@ const homeDetailByRepository = async (req: Request, res: Response) => {
   //   const data = await userRepository.find({ order: { id: "DESC" }, skip: 1, take:2 });
 
   //NOT, lesstahn condition
-  const data = await userRepository.find(
-    { 
-        where: { 
-            // email: Not("demo3@example.com")
-            // email: LessThan("demo3@example.com") 
-            // id: MoreThan(1)
-            // id: Equal(1)  
-            // name: Like("%d%")
-            // id: Between(2,4)
-            // name: In(['ram', 'demo']) 
-        } });
+  const data = await userRepository.find({
+    where: {
+      // email: Not("demo3@example.com")
+      // email: LessThan("demo3@example.com")
+      // id: MoreThan(1)
+      // id: Equal(1)
+      // name: Like("%d%")
+      // id: Between(2,4)
+      // name: In(['ram', 'demo'])
+    },
+  });
 
   res.status(200).json({
     data,
   });
 };
 
-export { homeDetail, homeDetailByRepository };
+const homeDetailByCustomRepo = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userRepository = getCustomRepository(UserRepo);
+
+    // const data = await userRepository.customSave("mydata", "test3@mail.com");
+
+    const data = await userRepository.findByNameAndEmail(
+      "mydata",
+      "test3@mail.com"
+    );
+    res.status(200).json({
+      data,
+    });
+  } catch (error) {
+    console.log("error", error);
+    next(error);
+  }
+};
+
+export { homeDetail, homeDetailByRepository, homeDetailByCustomRepo };
